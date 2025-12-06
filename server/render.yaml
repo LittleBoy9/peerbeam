@@ -1,0 +1,12 @@
+# Render.com deployment config
+services:
+  - type: web
+    name: peerbeam-signaling
+    env: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PORT
+        value: 10000
+    healthCheckPath: /health

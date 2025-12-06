@@ -1,0 +1,17 @@
+{
+  "name": "peerbeam-server",
+  "version": "1.0.0",
+  "description": "Local signaling server for PeerBeam P2P chat",
+  "main": "index.js",
+  "bin": {
+    "peerbeam-server": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.0"
+  },
+  "keywords": ["webrtc", "p2p", "chat", "signaling"],
+  "license": "MIT"
+}
