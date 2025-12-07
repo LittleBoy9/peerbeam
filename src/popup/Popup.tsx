@@ -213,6 +213,18 @@ function Popup() {
         <p className="text-slate-500 text-xs text-center mt-6">
           Join a room and share the Room ID with others to chat
         </p>
+
+        <p className="text-slate-500 text-xs text-center mt-4">
+          Developed by{" "}
+          <a
+            href="https://www.linkedin.com/in/sounakdas/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 hover:text-blue-300 hover:underline transition-colors"
+          >
+            Sounak
+          </a>
+        </p>
       </div>
     );
   }
