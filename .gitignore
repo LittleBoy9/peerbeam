@@ -21,6 +21,8 @@ Thumbs.db
 # VSCode settings
 .vscode/
 
+README_PERSONAL.md
+
 # Logs
 logs/
 *.log

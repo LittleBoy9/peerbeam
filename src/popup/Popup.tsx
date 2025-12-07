@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom/client";
 import "../styles/index.css";
-import { MeshPeerManager, Message, PeerInfo, RoomInfo } from "../lib/MeshPeerManager";
+import {
+  MeshPeerManager,
+  Message,
+  PeerInfo,
+  RoomInfo,
+} from "../lib/MeshPeerManager";
 
 type Screen = "connect" | "lobby" | "chat";
 
@@ -10,8 +15,7 @@ interface ChatMessage extends Message {
   isSystem?: boolean;
 }
 
-// const DEFAULT_SERVER = "ws://localhost:9876";
-const DEFAULT_SERVER = "wss://peerbeam-vd0o.onrender.com";
+const DEFAULT_SERVER = process.env.DEFAULT_SERVER || "ws://localhost:9876";
 
 function Popup() {
   const [screen, setScreen] = useState<Screen>("connect");
@@ -171,7 +175,7 @@ function Popup() {
     navigator.clipboard.writeText(roomId);
   };
 
-  const connectedPeerCount = peers.filter(p => p.connected).length;
+  const connectedPeerCount = peers.filter((p) => p.connected).length;
 
   // Connect Screen
   if (screen === "connect") {
@@ -184,7 +188,9 @@ function Popup() {
 
         <div className="space-y-4">
           <div>
-            <label className="block text-slate-300 text-sm mb-1">Your Name</label>
+            <label className="block text-slate-300 text-sm mb-1">
+              Your Name
+            </label>
             <input
               type="text"
               value={userName}
@@ -241,14 +247,19 @@ function Popup() {
               Connected as {userName}
             </p>
           </div>
-          <button onClick={leaveRoom} className="text-slate-400 hover:text-white text-sm">
+          <button
+            onClick={leaveRoom}
+            className="text-slate-400 hover:text-white text-sm"
+          >
             Disconnect
           </button>
         </div>
 
         {/* Create Room */}
         <div className="mb-4">
-          <label className="block text-slate-300 text-sm mb-1">Create or Join Room</label>
+          <label className="block text-slate-300 text-sm mb-1">
+            Create or Join Room
+          </label>
           <div className="flex gap-2">
             <input
               type="text"
@@ -299,7 +310,7 @@ function Popup() {
                   </div>
                   {room.peers.length > 0 && (
                     <p className="text-slate-400 text-xs mt-1 truncate">
-                      {room.peers.map(p => p.name).join(", ")}
+                      {room.peers.map((p) => p.name).join(", ")}
                     </p>
                   )}
                 </button>
@@ -325,8 +336,19 @@ function Popup() {
                 className="text-slate-400 hover:text-white transition-colors"
                 title="Copy room ID"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
                 </svg>
               </button>
             </div>
@@ -334,7 +356,8 @@ function Popup() {
               {connectedPeerCount > 0 ? (
                 <span className="flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                  {connectedPeerCount} peer{connectedPeerCount !== 1 ? "s" : ""} connected
+                  {connectedPeerCount} peer{connectedPeerCount !== 1 ? "s" : ""}{" "}
+                  connected
                 </span>
               ) : (
                 <span className="flex items-center gap-1">
@@ -395,11 +418,15 @@ function Popup() {
             ) : (
               <div
                 className={`max-w-[80%] rounded-lg p-2 ${
-                  msg.isOwn ? "bg-blue-600 text-white" : "bg-slate-700 text-white"
+                  msg.isOwn
+                    ? "bg-blue-600 text-white"
+                    : "bg-slate-700 text-white"
                 }`}
               >
                 {!msg.isOwn && (
-                  <p className="text-xs text-slate-400 mb-1">{msg.senderName}</p>
+                  <p className="text-xs text-slate-400 mb-1">
+                    {msg.senderName}
+                  </p>
                 )}
                 <p className="text-sm break-words">{msg.text}</p>
                 <p className="text-xs opacity-60 mt-1">
@@ -431,8 +458,19 @@ function Popup() {
             disabled={!inputText.trim()}
             className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white px-4 rounded font-medium transition-colors"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+              />
             </svg>
           </button>
         </div>
