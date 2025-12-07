@@ -9,6 +9,9 @@ dist/
 build/
 out/
 
+# Extension zip
+peerbeam-extension.zip
+
 # OS generated files
 .DS_Store
 Thumbs.db
@@ -21,6 +24,7 @@ Thumbs.db
 # VSCode settings
 .vscode/
 
+# Personal README
 README_PERSONAL.md
 
 # Logs
