@@ -15,7 +15,8 @@ interface ChatMessage extends Message {
   isSystem?: boolean;
 }
 
-const DEFAULT_SERVER = process.env.DEFAULT_SERVER || "ws://localhost:9876";
+const DEFAULT_SERVER =
+  import.meta.env.VITE_SERVER_URL || "wss://peerbeam-vd0o.onrender.com";
 
 function Popup() {
   const [screen, setScreen] = useState<Screen>("connect");
