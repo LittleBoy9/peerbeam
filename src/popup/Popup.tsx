@@ -10,12 +10,12 @@ interface ChatMessage extends Message {
   isSystem?: boolean;
 }
 
-const DEFAULT_SERVER = "ws://localhost:9876";
+// const DEFAULT_SERVER = "ws://localhost:9876";
+const DEFAULT_SERVER = "wss://peerbeam-vd0o.onrender.com";
 
 function Popup() {
   const [screen, setScreen] = useState<Screen>("connect");
   const [userName, setUserName] = useState("");
-  const [serverUrl, setServerUrl] = useState(DEFAULT_SERVER);
   const [isConnecting, setIsConnecting] = useState(false);
 
   // Lobby state
@@ -33,9 +33,8 @@ function Popup() {
   const roomRefreshInterval = useRef<number | null>(null);
 
   useEffect(() => {
-    chrome.storage.local.get(["userName", "serverUrl"], (result) => {
+    chrome.storage.local.get(["userName"], (result) => {
       if (result.userName) setUserName(result.userName);
-      if (result.serverUrl) setServerUrl(result.serverUrl);
     });
 
     return () => {
@@ -69,9 +68,9 @@ function Popup() {
     }
 
     setIsConnecting(true);
-    chrome.storage.local.set({ userName: userName.trim(), serverUrl });
+    chrome.storage.local.set({ userName: userName.trim() });
 
-    const manager = new MeshPeerManager(userName.trim(), serverUrl);
+    const manager = new MeshPeerManager(userName.trim(), DEFAULT_SERVER);
     peerManagerRef.current = manager;
 
     manager.onServerConnected((connected) => {
@@ -195,20 +194,6 @@ function Popup() {
             />
           </div>
 
-          <div>
-            <label className="block text-slate-300 text-sm mb-1">Server Address</label>
-            <input
-              type="text"
-              value={serverUrl}
-              onChange={(e) => setServerUrl(e.target.value)}
-              placeholder="ws://192.168.x.x:9876"
-              className="w-full p-2 rounded bg-slate-700 text-white placeholder-slate-400 border border-slate-600 focus:border-blue-500 focus:outline-none text-sm font-mono"
-            />
-            <p className="text-slate-500 text-xs mt-1">
-              Run: <code className="bg-slate-700 px-1 rounded">node server/index.js</code>
-            </p>
-          </div>
-
           <button
             onClick={connectToServer}
             disabled={!userName.trim() || isConnecting}
@@ -225,14 +210,9 @@ function Popup() {
           </button>
         </div>
 
-        <div className="mt-6 p-3 bg-slate-800 rounded-lg border border-slate-700">
-          <p className="text-slate-300 text-xs font-medium mb-2">Quick Start:</p>
-          <ol className="text-slate-400 text-xs space-y-1 list-decimal list-inside">
-            <li>Run the server on any machine in your network</li>
-            <li>Share the server IP with others</li>
-            <li>Everyone connects and joins the same room</li>
-          </ol>
-        </div>
+        <p className="text-slate-500 text-xs text-center mt-6">
+          Join a room and share the Room ID with others to chat
+        </p>
       </div>
     );
   }
